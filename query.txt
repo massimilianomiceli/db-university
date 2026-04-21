@@ -1,0 +1,64 @@
+QUERY CON SELECT
+
+1.
+SELECT *
+FROM db_university.students
+WHERE YEAR(`date_of_birth`)='1990';
+
+2.
+SELECT *
+FROM db_university.courses
+WHERE `cfu`>'10';
+
+3.
+SELECT * 
+FROM db_university.students
+WHERE TIMESTAMPDIFF(YEAR, date_of_birth, CURRENT_DATE) > 30;
+
+4.
+SELECT *
+FROM db_university.courses
+WHERE `period`= 'I semestre'
+AND `year`='1';
+
+5.
+SELECT *
+FROM db_university.exams
+WHERE `date` = '2020-06-20'
+AND `hour` > '14:00';
+
+6.
+SELECT * 
+FROM db_university.degrees
+WHERE `name` LIKE '%Magistrale%';
+
+7.
+SELECT COUNT(`id`)
+FROM db_university.departments;
+
+8.
+SELECT *
+FROM db_university.teachers
+WHERE `phone`IS NULL;
+
+QUERY CON GROUP
+
+1.
+SELECT YEAR(`enrolment_date`), COUNT(`id`)
+FROM db_university.students
+GROUP BY YEAR(`enrolment_date`);
+
+2.
+SELECT `office_address`, COUNT(`id`)
+FROM db_university.teachers
+GROUP BY `office_address`;
+
+3.
+SELECT `exam_id`, AVG(`vote`)
+FROM db_university.exam_student
+GROUP BY `exam_id`;
+
+4.
+SELECT `department_id`, COUNT(`id`)
+FROM db_university.degrees
+GROUP BY `department_id`;
