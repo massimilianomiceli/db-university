@@ -1,0 +1,54 @@
+QUERY ESERCIZIO 2
+
+1.
+SELECT `S`.`name`, `S`.`surname`, `D`.`name`
+FROM `students` AS S
+INNER JOIN `degrees` AS D ON `S`.`degree_id` = `D`.`id`
+WHERE `D`.`name`='Corso di Laurea in Economia';
+
+2.
+SELECT `DEP`.`name`
+FROM `degrees` AS DEG
+INNER JOIN `departments` AS DEP ON `DEG`.`department_id`=`DEP`.`id`
+WHERE `DEP`.`name`='Dipartimento di Neuroscienze'
+AND `DEG`.`name` LIKE '%Magistrale%';
+
+3.
+SELECT `T`.`name`, `T`.`surname`, `C`.`name`, `T`.`id`
+FROM `teachers` AS T
+INNER JOIN `course_teacher`AS CT ON `T`.`id`=`CT`.`teacher_id`
+INNER JOIN `courses` AS C ON `C`.`id`=`CT`.`course_id`
+WHERE `T`.`id`='44';
+
+4.
+SELECT `S`.`surname`, `S`.`name`, `DEG`.`name`, `DEP`.`name`
+FROM `students` AS S
+INNER JOIN `degrees` AS DEG ON `S`.`degree_id` = `DEG`.`id`
+INNER JOIN `departments` AS DEP ON `DEG`.`department_id`=`DEP`.`id`
+ORDER BY `S`.`surname` ASC, `S`.`name` ASC;
+
+5.
+SELECT `D`.`name`, `C`.`name`, `T`.`name`, `T`.`surname`
+FROM `teachers` AS T
+INNER JOIN `course_teacher`AS CT ON `T`.`id`=`CT`.`teacher_id`
+INNER JOIN `courses` AS C ON `C`.`id`=`CT`.`course_id`
+INNER JOIN `degrees` AS D ON `D`.`id`=`C`.`degree_id`;
+
+6.
+SELECT DISTINCT `T`.`name`, `T`.`surname`, `DEP`.`name`
+FROM `teachers` AS T
+INNER JOIN `course_teacher`AS CT ON `T`.`id`=`CT`.`teacher_id`
+INNER JOIN `courses` AS C ON `C`.`id`=`CT`.`course_id`
+INNER JOIN `degrees` AS DEG ON `DEG`.`id`=`C`.`degree_id`
+INNER JOIN `departments` AS DEP ON `DEP`.`id`=`DEG`.`department_id`
+WHERE `DEP`.`name`='Dipartimento di Matematica';
+
+7.
+SELECT `C`.`id`, `S`.`id`, `S`.`name`, `S`.`surname`, `C`.`name`, MAX(`ES`.`vote`), COUNT(`ES`.`exam_id`)
+FROM `students` AS S
+INNER JOIN `exam_student` AS ES ON `ES`.`student_id`=`S`.`id`
+INNER JOIN `exams` AS E ON `E`.`id`=`ES`.`exam_id`
+INNER JOIN `courses` AS C ON `C`.`id`=`E`.`course_id`
+GROUP BY  `C`.`id`, `S`.`id`
+HAVING MAX(`ES`.`vote`) >= '18'
+ORDER BY `S`.`id`;
